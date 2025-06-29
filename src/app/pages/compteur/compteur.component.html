@@ -1,0 +1,12 @@
+<div class="text-center mt-5">
+  <h2>Compteur interactif</h2>
+  <p class="display-4">{{ compteur }}</p>
+
+  <button class="btn btn-success btn-lg me-3" (click)="incrementer()">+</button>
+  <button class="btn btn-danger btn-lg" (click)="decrementer()">-</button>
+
+  <!-- ✅ Affiche ce message si compteur vaut 10 -->
+  <div *ngIf="compteur === 10" class="alert alert-info mt-4">
+    🎉 Niveau : <strong>Avancé</strong> atteint !
+  </div>
+</div>
