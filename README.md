@@ -27,8 +27,8 @@ Elle propose une interface intuitive, un système d’authentification et une na
 ### 📞 Page de contact
 ![Contact](./screenshots/contact.jpg)
 
-### ➕ Compteur interactif
-![Compteur](./screenshots/compteur.jpg)
+### Search Account
+![Compteur](./screenshots/SearchAcount.png)
 
 ### 🔟 Niveau avancé atteint
 ![Compteur 10](./screenshots/compteur10.jpg)
@@ -47,27 +47,3 @@ Elle propose une interface intuitive, un système d’authentification et une na
 - Angular Router / AuthGuard
 
 ---
-
-## 🧪 Accès de test
-
-> Email : `admin@ocpgroup.ma`  
-> Mot de passe : `password`
-
----
-
-## 📁 Structure du projet
-
-```bash
-src/
-├── app/
-│   ├── pages/
-│   │   ├── login/       # Page de connexion
-│   │   ├── accueil/
-│   │   ├── contact/
-│   │   ├── compteur/
-│   │   └── apropos/
-│   ├── services/        # AuthService
-│   ├── guards/          # AuthGuard
-│   ├── app.routes.ts
-│   ├── app.component.*
-│   └── app.config.ts
