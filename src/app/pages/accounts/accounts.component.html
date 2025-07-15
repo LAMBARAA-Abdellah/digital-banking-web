@@ -1,1 +1,104 @@
-<p>accounts works!</p>
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">🔍 Rechercher un Compte Bancaire</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Formulaire de recherche -->
+                    <form [formGroup]="accountFormGroup" (ngSubmit)="handleSearchAccount()" class="mb-3">
+                        <div class="input-group">
+                            <label for="accountId" class="input-group-text">Account ID</label>
+                            <input type="text" id="accountId" class="form-control" formControlName="accountId"
+                                placeholder="Entrez l'ID du compte" />
+                            <button type="submit" class="btn btn-info" [disabled]="accountFormGroup.invalid">
+                                <i class="bi bi-search"></i> Rechercher
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Affichage des résultats -->
+                    <div *ngIf="accountObservable | async as accountDetails">
+                        <!-- Détails du compte -->
+                        <div class="mb-4">
+                            <h5 class="text-primary">🧾 Détails du Compte</h5>
+                            <table class="table table-bordered table-hover mt-3">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Account ID</th>
+                                        <td>{{ accountDetails.accountId }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Solde</th>
+                                        <td>{{ accountDetails.balance | number:'1.2-2' }} €</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Page Actuelle</th>
+                                        <td>{{ accountDetails.currentPage + 1 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Pages Totales</th>
+                                        <td>{{ accountDetails.totalPages }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Taille de page</th>
+                                        <td>{{ accountDetails.pageSize }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Solde résumé -->
+                            <div class="alert alert-info" role="alert">
+                                <strong>Solde du compte :</strong> {{ accountDetails.balance | number:'1.2-2' }} €
+                            </div>
+                        </div>
+
+                        <!-- Liste des opérations -->
+                        <div>
+                            <h5 class="text-primary">📑 Historique des Opérations</h5>
+                            <ul class="list-group mt-3">
+                                <li class="list-group-item d-flex flex-column gap-1"
+                                    *ngFor="let operation of accountDetails.accountOperationDTOS">
+                                    <div>
+                                        <strong>ID :</strong> {{ operation.id }} |
+                                        <strong>Type :</strong> {{ operation.type }} |
+                                        <strong>Montant :</strong> {{ operation.amount | number:'1.2-2' }} €
+                                    </div>
+                                    <div *ngIf="operation.description">
+                                        <strong>Description :</strong> {{ operation.description }}
+                                    </div>
+                                    <div>
+                                        <strong>Date :</strong> {{ operation.operationDate | date: 'short' }}
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <!-- Pagination -->
+                            <nav aria-label="Pagination" class="mt-4">
+                                <ul class="pagination justify-content-center">
+                                    <li class="page-item" [class.disabled]="currentPage === 0">
+                                        <button class="page-link" (click)="previousPage()">
+                                            &laquo; Précédent
+                                        </button>
+                                    </li>
+                                    <li class="page-item disabled">
+                                        <span class="page-link">
+                                            Page {{ currentPage + 1 }} / {{ accountDetails.totalPages }}
+                                        </span>
+                                    </li>
+                                    <li class="page-item"
+                                        [class.disabled]="currentPage >= accountDetails.totalPages - 1">
+                                        <button class="page-link" (click)="nextPage()">
+                                            Suivant &raquo;
+                                        </button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
