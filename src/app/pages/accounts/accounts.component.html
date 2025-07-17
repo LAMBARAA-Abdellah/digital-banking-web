@@ -1,6 +1,6 @@
 <div class="container mt-4">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
+    <div class="row ">
+        <div class="col-md-6">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-info text-white">
                     <h5 class="mb-0">🔍 Rechercher un Compte Bancaire</h5>
@@ -97,6 +97,66 @@
                             </nav>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0" *ngIf="accountObservable | async as accountDetails">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">📊 Operations</h5>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="operationFormGroup" (ngSubmit)="handleAccountOperation()" method="post">
+                        <div class="mb-3 w-100">
+                            <label class="form-label text-primary d-block mb-2">Type d'Opération</label>
+                            <div class="d-flex justify-content-between gap-2">
+                                <!-- DEBIT -->
+                                <label class="form-check flex-fill text-center p-3 border rounded cursor-pointer">
+                                    <input type="radio" class="form-check-input d-none" value="DEBIT"
+                                        formControlName="operationType" />
+                                    <span class="d-block">DEBIT</span>
+                                </label>
+                                <!-- CREDIT -->
+                                <label class="form-check flex-fill text-center p-3 border rounded cursor-pointer">
+                                    <input type="radio" class="form-check-input d-none" value="CREDIT"
+                                        formControlName="operationType" />
+                                    <span class="d-block">CREDIT</span>
+                                </label>
+                                <!-- TRANSFER -->
+                                <label class="form-check flex-fill text-center p-3 border rounded cursor-pointer">
+                                    <input type="radio" class="form-check-input d-none" value="TRANSFER"
+                                        formControlName="operationType" />
+                                    <span class="d-block">TRANSFER</span>
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <!--ajouter account destination -->
+                        <div class="mb-3" *ngIf="operationFormGroup.value.operationType === 'TRANSFER'">
+                            <label for="accountDestination" class="form-label text-primary">ID Compte
+                                Destination</label>
+                            <input type="text" id="accountDestination" class="form-control"
+                                formControlName="accountDestination" placeholder="Entrez l'ID du compte destination" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label text-primary">Montant</label>
+                            <input type="number" id="amount" class="form-control" formControlName="amount"
+                                placeholder="Entrez le montant" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label text-primary">Description</label>
+                            <textarea id="description" class="form-control" formControlName="description"
+                                placeholder="Entrez une description"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success" [disabled]="!accountFormGroup.valid">
+                                <i class="bi bi-plus-circle"></i> Ajouter Opération
+                            </button>
+                        </div>
+
+                    </form>
+
                 </div>
             </div>
         </div>

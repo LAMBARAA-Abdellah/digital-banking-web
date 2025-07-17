@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../../services/customers/customer.service';
 import { Customer } from '../../model/customer.model';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { RouterModule } from '@angular/router'; 
+import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -24,7 +25,7 @@ export class CustomersComponent implements OnInit {
   errorMessage = '';
   searchFormFroup!: FormGroup;
 
-  constructor(private customerService: CustomerService, private fb: FormBuilder) { }
+  constructor(private customerService: CustomerService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.searchFormFroup = this.fb.group({
@@ -136,5 +137,10 @@ export class CustomersComponent implements OnInit {
 
   cancelEdit(): void {
     this.editingCustomer = null;
+  }
+
+  handleCustomerAccounts(customer: Customer): void {
+    console.log(customer);
+    this.router.navigateByUrl("/customer-accounts/" + customer.id, { state: { customer } });
   }
 }

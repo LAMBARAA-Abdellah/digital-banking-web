@@ -20,4 +20,35 @@ export class AccountsService {
 
     return this.http.get<AccountDetails>(url, { params });
   }
+  //function debit
+  public debit(accountId: string, amount: number, description: string) {
+    let data = {
+      accountId: accountId,
+      amount: amount,
+      description: description
+    };
+    const url = `${this.apiUrl}/debit`;
+    return this.http.post(url, data);
+  }
+  //function credit
+  public credit(accountId: string, amount: number, description: string) {
+    let data = {
+      accountId: accountId,
+      amount: amount,
+      description: description
+    };
+    const url = `${this.apiUrl}/credit`;
+    return this.http.post(url, data);
+  }
+  //function transfer
+  public transfer(accountSource: string, accountDestination: string, amount: number) {
+    let data = {
+      accountSource: accountSource,
+      accountDestination: accountDestination,
+      amount: amount,
+    };
+    const url = `${this.apiUrl}/transfer`;
+    return this.http.post(url, data);
+
+  }
 }
